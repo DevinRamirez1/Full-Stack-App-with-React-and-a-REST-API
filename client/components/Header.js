@@ -8,7 +8,7 @@ const Header = () => {
                 <nav>
                     <ul className="header--signedIn">
                         <li>Welcome,</li>
-                        <li><a href="">Sign Out</a></li>
+                        <li><a href="/signout">Sign Out</a></li>
                     </ul>
                 </nav>
             </div>
