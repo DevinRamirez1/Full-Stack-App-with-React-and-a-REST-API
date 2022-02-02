@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
-import CreateCourse from './components/CreateCoures';
+import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
