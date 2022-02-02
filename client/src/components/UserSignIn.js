@@ -21,7 +21,7 @@ function UserSignIn() {
                         type="password"
                         value=""
                     />
-                    <button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick={}>Cancel</button>
+                    <button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick={actions.cancelForm}>Cancel</button>
                 </form>
                 <p>Don't have a user account? Click here to <a href="/signup">sign up</a>!</p>
             </div>

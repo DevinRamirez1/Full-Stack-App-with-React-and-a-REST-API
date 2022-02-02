@@ -38,7 +38,7 @@ function UpdateCourse() {
                             />
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button><button className="button button--secondary" onClick={}>Cancel</button>
+                    <button className="button" type="submit">Update Course</button><button className="button button--secondary" onClick={actions.cancelForm}>Cancel</button>
                 </form>
             </div>
         </main>
