@@ -1,55 +1,76 @@
-import React, { useState, createContext } from 'react';
+import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import axios from 'axios';
+import Data from './Data';
 
-export const userContext = createContext();
+const Context = React.createContext();
 
-export const UserProvider = (props) => {
-    const authUser = Cookies.get('authenticatedUser');
-    const [user, setUser] = useState(authUser ? JSON.parse(authUser) : null);
+export class Provider extends Component {
+    
+    state = {
+        authenticatedUser: null
+    };
 
-    const signIn = (e) => {
-        e.preventDefault();
-        const encodedCredentials = Buffer.from( `${e.target.emailAddress.value}:${e.target.password.value}`).toString('base64');
+    constructor() {
+        super();
+        this.data = new Data();
+        this.cookie = Cookies.get('authenticatedUser');
 
-        axios
-            .get('users', {
-                headers: {
-                    Authorization: `Basic ${encodedCredentials}`,
-                },
-            })
-            .then((res) => {
-                if (res.status === 200) {
-                    setUser(res.data);
-                    res.data.encodedCred = encodedCredentials;
-                    res.data.password = e.target.password.value;
-                    Cookies.set('authenticatedUser', JSON.stringify(res.data), {
-                        expires: 7,
-                        path: ','
-                    });
+        this.state = {
+            authenticatedUser: this.cookie ? JSON.parse(this.cookie) : null
+        }
+    };
 
-                    window.location.assign('/');
+    render() {
+        
+        const { authenticatedUser } = this.state;
+
+        const value = {
+            authenticatedUser,
+            data: this.data,
+            actions: {
+                signIn: this.signIn,
+                signOut: this.signOut
+            },
+        };
+
+        return (
+            <Context.Provider value={value}>
+                {this.props.children}
+            </Context.Provider>
+        );
+    }
+
+    signIn = async (username, password) => {
+        const user = await this.data.getUser(username, password);
+        if ( user !== null ) {
+            this.setState(() => {
+                return {
+                    authenticatedUser: user,
                 }
             })
-            .catch(async (error) => {
-                Cookies.remove('authenticatedUser');
-                setUser(null);
-                window.location.assign('/');
-            });
-    };
+            Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+        }
+        return user;
+    }
 
-    const value ={
-        user,
-        setUser,
-        actions: {
-            signOut: signOut,
-            signIn: signIn,
-        },
-    };
+    signOut = () => {
+        this.setState( () => {
+            return {
+                authenticatedUser: null,
+            };
+        });
+        Cookies.remove('authenticatedUser');
+    }
+}
 
-    return (
-        <userContext.Provider value={value}>{props.children}</userContext.Provider>
-    );
-};
+export const Consumer = Context.Consumer;
 
-export const Consumer = userContext.Consumer;
+export default function withContext(Component) {
+    return function ContextComponent(props) {
+        return (
+            <Context.Consumer>
+                {context => <Component {...props} context={context} />}
+            </Context.Consumer>
+        );
+    }
+}
