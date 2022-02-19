@@ -1,29 +1,67 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import './styles/global.css'
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import withContext from './Context';
 
+//Importing Components
 import Header from './components/Header';
+
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 
+import PrivateRoute from './PrivateRoute';
+
+//Adding context to components
+const HeaderWithContext = withContext(Header);
+
+const CoursesWithContext = withContext(Courses);
+const CourseDetailWithContext = withContext(CourseDetail);
+const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
+
+const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignOutWithContext = withContext(UserSignOut);
+
+const PrivateRouteWithContext = withContext(PrivateRoute);
 function App() {
   return (
-    <React.Fragment>
-    <Header />
-      <Routes>
-        <Route exact path='/' element={<Courses />}/>
-        <Route path='/courses/:id' element={<CourseDetail />}/>
-        <Route path='/courses/create' element={<CreateCourse />}/>
-        <Route path='/courses/:id/update' element={<UpdateCourse />}/>
-        <Route path='/signin' element={<UserSignIn />}/>
-        <Route path='signout' element={<UserSignOut/>}/>
-        <Route path ='/signup' element={<UserSignUp/>}/>
-      </Routes>
-    </React.Fragment>
+    <div id='root'>
+      <BrowserRouter>
+        <HeaderWithContext />
+        <main>
+          <Routes>
+            <Route index element={<CoursesWithContext />} />
+            <Route path='signin' element={<UserSignInWithContext />} />
+            <Route path='signup' element={<UserSignUpWithContext />} />
+            <Route path='signout' element={<UserSignOutWithContext />} />
+            <Route path='courses'>
+              <Route index element={<CoursesWithContext />} />
+              <Route path=':id'>
+                <Route index element={<CourseDetailWithContext />} />
+                <Route path='update' element={
+                  <PrivateRouteWithContext redirectTo={'/signin'}>
+                    <UpdateCourseWithContext />
+                  </PrivateRouteWithContext>
+                } />
+                <Route path='delete' element={<CourseDetail />} />
+              </Route>
+            </Route>
+            <Route path='create' element={
+              <PrivateRouteWithContext redirectTo={'/signin'}>
+                <CreateCourseWithContext />
+              </PrivateRouteWithContext>
+            } />
+          </Routes>
+        </main>
+      </BrowserRouter>
+    </div>
   );
 }
 
