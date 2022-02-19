@@ -26,7 +26,7 @@ export default function UserSignIn({ context }) {
                     }
                 });
         }
-        
+
     return (
         <React.Fragment>
             <div className="form--centered">
@@ -62,11 +62,8 @@ export default function UserSignIn({ context }) {
                             </label>
                         </React.Fragment>
                     )}/>
-                    <button className="button" type="submit">Sign In</button><button className="button button-secondary" onClick={actions.cancelForm}>Cancel</button>
-                <p>Don't have a user account? Click here to <a href="/signup">sign up</a>!</p>
+                <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
             </div>
         </React.Fragment>
     )
 }
-
-export default UserSignIn;

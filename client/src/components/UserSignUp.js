@@ -84,9 +84,7 @@ export default function UserSignUp({ context }) {
                         </React.Fragment>
                     )}
                 />
-                <p>Already have a user account? Click here to <a href="/signup">sign up</a>!</p>
+                <p>Already have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
             </div>
     )
 }
-
-export default UserSignUp;
