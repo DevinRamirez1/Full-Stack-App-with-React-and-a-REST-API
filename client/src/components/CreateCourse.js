@@ -1,8 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import Form from './Form';
 
-function CreateCourse() {
+export default function CreateCourse({ context }) {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [estimatedTime, setEstimatedTime] = useState('');
+    const [materialsNeeded, setMaterialsNeeded] = useState('');
+    const [userId, setUserId] = useState(0);
+    const [errors, setErrors] = useState([]);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setUserId(context.authenticatedUser.userId);
+    },[context.authenticatedUser.userId])
+
+    const submit = () => {
+        const course = {
+            title,
+            description,
+            estimatedTime,
+            materialsNeeded,
+            userId
+        };
+        
+        const emailAddress = context.authenticatedUser.emailAddress;
+        const password = context.authenticatedUser.password;
+
+        context.data.createCourse(course, emailAddress, password)
+            .then(() => {
+                console.log('Course has been created')
+                navigate('/');
+            })
+            .catch (error => {
+                if (error.response) {
+                    setErrors(error.response.data.errors)
+                } else {
+                    navigate('/error');
+                }
+            });
+    }
+
+    const cancel = () => {
+        navigate('/');
+    }
+
     return(
-        <main>
+        <React.Fragment>
             <div className="wrap">
                 <h2>Create Course</h2>
                 <div className="validation--errors">
@@ -12,42 +57,62 @@ function CreateCourse() {
                         <li>Please provide a value for "Description"</li>
                     </ul>
                 </div>
-                <form> 
-                <div className="main--flex">
-                        <div>
-                            <label htmlFor="courseTitle">Course Title</label>
-                            <input
-                                id="courseTitle"
-                                name="courseTitle"
-                                type="text"
-                            />
-                            <p>By</p>
+                <Form
+                    cancel={cancel}
+                    errors={errors}
+                    submit={submit}
+                    submitButtonText='Create Course'
+                    elements={() => (
+                        <div className="main--flex">
+                            <div>
+                                <label>Course Title
+                                <input
+                                    id="courseTitle"
+                                    name="courseTitle"
+                                    type="text"
+                                    value={title}
+                                    onChange={e => setTitle(e.target.value)}
+                                    placeholder='Course Title'
+                                />
+                                </label>
+                                    <p>By: {context.authenticatedUser.firstName} {context.authenticatedUser.lastName}</p>
 
-                            <label htmlFor="courseDescription">Course Description</label>
-                            <textarea
-                                id="courseDescription"
-                                name="courseDescription"
-                            />
+                                <label>Course Description
+                                    <textarea
+                                        id="courseDescription"
+                                        name="courseDescription"
+                                        value={description}
+                                        onChange={e => setDescription(e.target.value)}
+                                        placeholder='Course Description'
+                                    />
+                                </label>
+                            </div>
+                            <div>
+                                <label>Estimated Time
+                                <input
+                                    id="estimatedTime"
+                                    name="estimatedTime"
+                                    type="text"
+                                    value={estimatedTime}
+                                    onChange={e => setEstimatedTime(e.target.value)}
+                                    placeholder='Estimated Time'
+                                />
+                                </label>
+                                <label>Materials Needed
+                                    <textarea
+                                        id="materialsNeeded"
+                                        name="materitalsNeeded"
+                                        value={materialsNeeded}
+                                        onChange={e => setMaterialsNeeded(e.target.value)}
+                                        placeholder='Materials Needed'
+                                    />
+                                </label>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="estimatedTime">Estimated Time</label>
-                            <input
-                                id="estimatedTime"
-                                name="estimatedTime"
-                                type="text"
-                            />
-
-                            <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea
-                                id="materialsNeeded"
-                                name="materitalsNeeded"
-                            />
-                        </div>
-                    </div>
-                    <button className="button" type="submit">Create Course</button><button className="button button--secondary" onClick={actions.cancelForm}>Cancel</button>
-                </form>
+                    )}
+                />
             </div>
-        </main>
+        </React.Fragment>
     )
 }
 
