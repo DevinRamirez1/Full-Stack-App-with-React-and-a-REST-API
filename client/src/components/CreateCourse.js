@@ -115,5 +115,3 @@ export default function CreateCourse({ context }) {
         </React.Fragment>
     )
 }
-
-export default CreateCourse;
