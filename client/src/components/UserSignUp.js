@@ -38,7 +38,7 @@ export default function UserSignUp({ context }) {
             });
     }
 
-    cancel = () => {
+    const cancel = () => {
         navigate('/');
     }
 
