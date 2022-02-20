@@ -37,27 +37,29 @@ function App() {
         <HeaderWithContext />
         <main>
           <Routes>
-            <Route index element={<CoursesWithContext />} />
-            <Route path='signin' element={<UserSignInWithContext />} />
-            <Route path='signup' element={<UserSignUpWithContext />} />
-            <Route path='signout' element={<UserSignOutWithContext />} />
-            <Route path='courses'>
+            <Route path='/'>
               <Route index element={<CoursesWithContext />} />
-              <Route path=':id'>
-                <Route index element={<CourseDetailWithContext />} />
-                <Route path='update' element={
-                  <PrivateRouteWithContext redirectTo={'/signin'}>
-                    <UpdateCourseWithContext />
-                  </PrivateRouteWithContext>
-                } />
-                <Route path='delete' element={<CourseDetail />} />
+              <Route path='signin' element={<UserSignInWithContext />} />
+              <Route path='signup' element={<UserSignUpWithContext />} />
+              <Route path='signout' element={<UserSignOutWithContext />} />
+              <Route path='courses'>
+                <Route index element={<CoursesWithContext />} />
+                <Route path=':id'>
+                  <Route index element={<CourseDetailWithContext />} />
+                  <Route path='update' element={
+                    <PrivateRouteWithContext redirectTo={'/signin'}>
+                      <UpdateCourseWithContext />
+                    </PrivateRouteWithContext>
+                  } />
+                  <Route path='delete' element={<CourseDetail />} />
+                </Route>
               </Route>
+              <Route path='create' element={
+                <PrivateRouteWithContext redirectTo={'/signin'}>
+                  <CreateCourseWithContext />
+                </PrivateRouteWithContext>
+              } />
             </Route>
-            <Route path='create' element={
-              <PrivateRouteWithContext redirectTo={'/signin'}>
-                <CreateCourseWithContext />
-              </PrivateRouteWithContext>
-            } />
           </Routes>
         </main>
       </BrowserRouter>
