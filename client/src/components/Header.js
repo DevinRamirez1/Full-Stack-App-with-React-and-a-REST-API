@@ -1,19 +1,27 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
-const Header = () => {
+export default function Header({context}) {
+    const authUser = context.authenticatedUser;
+
     return (
-        <Header>
+        <header>
             <div className="wrap header--flex">
-                <h1 className="header--logo"><a href="">Courses</a></h1>
+                <h1 className="header--logo"><Link to="/courses">Courses</Link></h1>
                 <nav>
-                    <ul className="header--signedIn">
-                        <li>Welcome,</li>
-                        <li><a href="/signout">Sign Out</a></li>
-                    </ul>
+                    {authUser ?
+                        <ul className="header--signedin">
+                            <li>Welcome, {authUser.firstName}</li>
+                            <li><Link to="/signout">Sign Out</Link></li>
+                        </ul>
+                        :
+                        <ul className="header--signedout">
+                            <li><Link to='/signup'>Sign Up</Link></li>
+                            <li><Link to='/signin'>Sign In</Link></li>
+                        </ul>
+                    }
                 </nav>
             </div>
-        </Header>
-    )
+        </header>
+    );
 }
-
-export default Header;
