@@ -27,6 +27,10 @@ export default function UserSignIn({ context }) {
                 });
         }
 
+        const cancel = () => {
+            navigate('/');
+        }
+
     return (
         <React.Fragment>
             <div className="form--centered">
