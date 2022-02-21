@@ -17,6 +17,9 @@ import UserSignOut from './components/UserSignOut';
 
 import PrivateRoute from './PrivateRoute';
 
+import UnhandledError from './components/UnhandledError';
+import Forbidden from './components/Forbidden';
+import NotFound from './components/NotFound';
 //Adding context to components
 const HeaderWithContext = withContext(Header);
 
@@ -30,6 +33,7 @@ const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
 
 const PrivateRouteWithContext = withContext(PrivateRoute);
+
 function App() {
   return (
     <div id='root'>
@@ -53,12 +57,15 @@ function App() {
                   } />
                   <Route path='delete' element={<CourseDetail />} />
                 </Route>
-              </Route>
               <Route path='create' element={
                 <PrivateRouteWithContext redirectTo={'/signin'}>
                   <CreateCourseWithContext />
                 </PrivateRouteWithContext>
               } />
+            </Route>
+            <Route path='error' element={<UnhandledError />} />
+            <Route path='forbidden' element={<Forbidden />} />
+            <Route path='notfound' element={<NotFound />} />
             </Route>
           </Routes>
         </main>
