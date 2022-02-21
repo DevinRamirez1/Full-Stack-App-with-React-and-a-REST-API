@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import Form from './Form';
-import axios from 'axios';
 
 export default function UserSignUp({ context }) {
     const [firstName, setFirstName] = useState('');
@@ -58,6 +57,9 @@ export default function UserSignUp({ context }) {
                                     id="firstName"
                                     name="firstName"
                                     type="text"
+                                    value={firstName}
+                                    onChange={e => setFirstName(e.target.value)}
+                                    placeholder='First Name'
                                 />
                             </label>
                             <label>Last Name
@@ -65,6 +67,9 @@ export default function UserSignUp({ context }) {
                                     id="lastName"
                                     name="lastName"
                                     type="text"
+                                    value={lastName}
+                                    onChange={e => setLastName(e.target.value)}
+                                    placeholder='Last Name'
                                 />
                             </label>
                             <label>Email Address
@@ -72,6 +77,9 @@ export default function UserSignUp({ context }) {
                                     id="emailAddress"
                                     name="emailAddress"
                                     type="email"
+                                    value={emailAddress}
+                                    onChange={e => setEmailAddress(e.target.value)}
+                                    placeholder='Email Address'
                                 />
                             </label>
                             <label>Password
@@ -79,12 +87,15 @@ export default function UserSignUp({ context }) {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    placeholder='Password'
                                 />
                             </label>
                         </React.Fragment>
                     )}
                 />
-                <p>Already have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
+                <p>Already have a user account? Click here to <Link to="/signin">Sign In</Link>!</p>
             </div>
     )
 }
