@@ -1,9 +1,11 @@
 import React, {useEffect} from "react";
 import {Navigate} from 'react-router-dom';
 
-export default ({ context }) => {
+function UserSignOut ({ context }) {
     useEffect(() => context.actions.signout());
     return(
-        <Navigate to='/' />
+        <Navigate replace to='/' />
     );
 }
+
+export default UserSignOut;
