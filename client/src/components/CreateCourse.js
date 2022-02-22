@@ -34,7 +34,9 @@ export default function CreateCourse({ context }) {
                 navigate('/');
             })
             .catch (error => {
-                if (error.response) {
+                if (error.response.status === 401) {
+                    navigate('/forbidden');
+                } else if (error.response) {
                     setErrors(error.response.data.errors)
                 } else {
                     navigate('/error');
@@ -50,13 +52,6 @@ export default function CreateCourse({ context }) {
         <React.Fragment>
             <div className="wrap">
                 <h2>Create Course</h2>
-                <div className="validation--errors">
-                    <h3>Validation Errors</h3>
-                    <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
-                    </ul>
-                </div>
                 <Form
                     cancel={cancel}
                     errors={errors}
@@ -101,7 +96,7 @@ export default function CreateCourse({ context }) {
                                 <label>Materials Needed
                                     <textarea
                                         id="materialsNeeded"
-                                        name="materitalsNeeded"
+                                        name="materialsNeeded"
                                         value={materialsNeeded}
                                         onChange={e => setMaterialsNeeded(e.target.value)}
                                         placeholder='Materials Needed'
