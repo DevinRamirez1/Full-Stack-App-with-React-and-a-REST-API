@@ -13,8 +13,8 @@ export default function CreateCourse({ context }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setUserId(context.authenticatedUser.userId);
-    },[context.authenticatedUser.userId])
+        setUserId(context.authenticatedUser.id);
+    },[context.authenticatedUser.id])
 
     const submit = () => {
         const course = {
