@@ -97,5 +97,5 @@ export default function UserSignUp({ context }) {
                 />
                 <p>Already have a user account? Click here to <Link to="/signin">Sign In</Link>!</p>
             </div>
-    )
+    );
 }
