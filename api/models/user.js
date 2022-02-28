@@ -70,8 +70,18 @@ module.exports = (sequelize) => {
     //Creates association with course model
     User.associate = (models) => {
         User.hasMany(models.Course, {
-            foreignKey: 'userId',
-            allowNull: false,
+            foreignKey: {
+                fieldName: 'userId',
+                allowNull: false,
+                validate: {
+                    notNull : {
+                        msg: 'A user ID is required.'
+                    },
+                    notEmpty: {
+                        msg: 'Please provide a user ID'
+                    }
+                }
+            },
         })
     }
 
