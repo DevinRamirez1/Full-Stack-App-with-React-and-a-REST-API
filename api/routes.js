@@ -4,6 +4,7 @@ const router = express.Router();
 const { User, Course} = require('./models');
 const { authenticateUser } = require('./middleware/auth-user');
 const createError = require('http-errors');
+const user = require('./models/user');
 
 //Asynchandler function
 function asyncHandler(cb) {
@@ -65,6 +66,7 @@ router.get('/courses/:id', asyncHandler( async(req, res) => {
         include: [
             {
                 model: User,
+                as: 'User',
                 attributes: ['firstName', 'lastName', 'emailAddress'],
             }
         ]
