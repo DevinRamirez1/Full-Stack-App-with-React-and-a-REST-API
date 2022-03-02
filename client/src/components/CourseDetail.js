@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { Context } from '../Context'
 
-function CourseDetail({ context }) {
+function CourseDetail() {
     const { id } = useParams();
     const [ course, setCourse ] = useState({});
     const [user, setUser] = useState({});
+    const context = useContext(Context);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        context.data.api(`/courses/${id}`)
+        context.data.getCourse(id)
             .then(response => {
                 setCourse(response.data);
-                setUser(response.data.user);
+                setUser(response.data.User);
             })
             .catch (error => {
                 if (error.response.status === 404) {
@@ -23,7 +25,7 @@ function CourseDetail({ context }) {
                     navigate('/error');
                 }
             })
-    }, []);
+    }, [context, navigate, id]);
 
     return (
             <React.Fragment>
@@ -46,7 +48,7 @@ function CourseDetail({ context }) {
                             : null
                         :null
                         }
-                        <Link className="button button--secondary" to={'/'}>Return to course list</Link>
+                        <Link className="button button--secondary" to={'/'}>Return To Course List</Link>
                     </div>
                 </div>
 
