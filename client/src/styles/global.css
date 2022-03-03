@@ -29,8 +29,9 @@ a {
     padding: 0 1rem;
 }
 header {
-    background: #57496e;
-    color: #fff;
+    background: #4e5eeb;
+    color: rgb(201, 199, 199);
+    border-radius: 10px;
     padding: 1rem 0;
     margin-bottom: 2rem;
 }
@@ -40,14 +41,15 @@ header {
     align-items: center;
 }
 .header--logo a {
-    font-size: 1.25rem;
+    font-size:2.0rem;
     color: #fff;
 }
 header li {
     font-size: .8rem;
+    color: rgb(201, 199, 199);
 }
 header nav a {
-    color: #dbd;
+    color: rgb(201, 199, 199);
 }
 header nav a:hover {
     color: #fff;
@@ -62,20 +64,21 @@ header nav a:hover {
     margin-left: .5rem;
 }
 .course--module {
-    background: #7c689b;
+    background: #3ad85cfb;
+    border: 2.5px solid black;
     border-radius: .5rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     display: block;
 }
 .course--label {
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: .9rem;
     font-weight: 400;
     margin-bottom: .25rem;
 }
 .course--title {
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-weight: 700;
     font-size: 1.25rem;
 }
@@ -112,7 +115,8 @@ header nav a:hover {
     line-height: 1.5;
 }
 .actions--bar {
-    background: #e9e5f0;
+    background: #b7bcf7;
+    border-radius: 10px;
     padding: 1rem 0;
     margin: -2rem 0 2rem;
 }
@@ -167,11 +171,11 @@ textarea {
     min-height: 300px;
 }
 .button {
-    background: #7c689b;
-    color: #fff;
+    background: #3ad85cfb;
+    color: rgb(3, 3, 3);
     font-size: 1rem;
     padding: .75rem 1.5rem;
-    border: 0;
+    border: 2.5px solid black;
     margin: 0 0 .5rem 0;
     display: block;
     width: 210px;
@@ -184,11 +188,12 @@ textarea {
     margin-bottom: 0;
 }
 .button:not(.button-secondary):hover {
-    background: #63537d;
+    background: #537d68;
     cursor: pointer;
 }
 .button-secondary {
     color: #7c689b;
+    border: 2.5px solid #7c689b;
     background: none;
     box-shadow: 0 0 0 2px #7c689b inset;
     transition: box-shadow 0.2s, color 0.2s;
