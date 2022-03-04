@@ -14,8 +14,8 @@ function CourseDetail() {
     useEffect(() => {
         context.data.getCourse(id)
             .then(response => {
-                setCourse(response.data);
-                setUser(response.data.User);
+                setCourse(response);
+                setUser(response.User);
             })
             .catch (error => {
                 if (error.response.status === 404) {
