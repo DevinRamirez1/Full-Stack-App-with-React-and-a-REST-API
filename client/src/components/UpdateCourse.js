@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import Form from "./Form";
+import { Context } from "../Context";
 
-export default function UpdateCourse({ context }) {
+function UpdateCourse() {
+    const context = useContext(Context)
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [author, setAuthor] = useState('');
-    const [userId, setUserId] = useState('');
     const [errors, setErrors] = useState('');
 
     const { id } = useParams();
@@ -17,15 +18,14 @@ export default function UpdateCourse({ context }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        context.data.api(`/courses/${id}`)
+        context.data.getCourse(id)
             .then(response => {
-                if (response.course.userId === context.authenticatedUser.userId) {
-                    setTitle(response.data.title)
-                    setDescription(response.data.description)
-                    setEstimatedTime(response.data.estimatedTime)
-                    setMaterialsNeeded(response.data.materialsNeeded)
-                    setUserId(response.data.userId)
-                    setAuthor(`${response.data.User.firstName} ${response.data.User.lastName}`)
+                if (response.course.userId === context.authenticatedUser.id) {
+                    setTitle(response.course.title)
+                    setDescription(response.course.description)
+                    setEstimatedTime(response.course.estimatedTime)
+                    setMaterialsNeeded(response.course.materialsNeeded)
+                    setAuthor(`${response.course.User.firstName} ${response.course.User.lastName}`)
                 } else {
                     navigate('/forbidden');
                 }
@@ -45,7 +45,7 @@ export default function UpdateCourse({ context }) {
             description,
             estimatedTime,
             materialsNeeded,
-            userId
+            userId: context.authenticatedUser.userId
         };
 
         const emailAddress = context.authenticatedUser.emailAddress;
@@ -125,3 +125,5 @@ export default function UpdateCourse({ context }) {
         </React.Fragment>
     )
 }
+
+export default UpdateCourse;
