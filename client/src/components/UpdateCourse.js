@@ -74,7 +74,7 @@ function UpdateCourse() {
 
     //Handles cancel button
     const cancel = () => {
-        navigate('/');
+        navigate(-1);
     }
 
     return(
