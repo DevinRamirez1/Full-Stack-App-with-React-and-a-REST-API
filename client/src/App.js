@@ -65,7 +65,7 @@ function App() {
             </Route>
             <Route path='error' element={<UnhandledError />} />
             <Route path='forbidden' element={<Forbidden />} />
-            <Route path='notfound' element={<NotFound />} />
+            <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
         </main>
