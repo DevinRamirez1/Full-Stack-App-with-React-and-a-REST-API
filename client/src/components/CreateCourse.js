@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Form from './Form';
 
 export default function CreateCourse({ context }) {
+
+    //Component States
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
@@ -12,10 +14,12 @@ export default function CreateCourse({ context }) {
 
     const navigate = useNavigate();
 
+    //Sets User id to be authenticated
     useEffect(() => {
         setUserId(context.authenticatedUser.id);
     },[context.authenticatedUser.id])
 
+    //Handles submit button
     const submit = () => {
         const course = {
             title,
@@ -25,9 +29,11 @@ export default function CreateCourse({ context }) {
             userId
         };
         
+        //Variables to authenticate user
         const emailAddress = context.authenticatedUser.emailAddress;
         const password = context.authenticatedUser.password;
 
+        //Creates course in the database
         context.data.createCourse(course, emailAddress, password)
             .then(() => {
                 console.log('Course has been created')
@@ -44,6 +50,7 @@ export default function CreateCourse({ context }) {
             });
     }
 
+    //Handles cancel button
     const cancel = () => {
         navigate('/');
     }

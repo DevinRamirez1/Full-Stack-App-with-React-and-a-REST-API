@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Courses({ context }) {
+
+    //Component States
     const [courses, setCourses] = useState([]);
     const navigate = useNavigate();
 
+    //Retrieves Courses data to be listed
     useEffect(() => {
         context.data.api('/courses')
             .then(response => {

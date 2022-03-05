@@ -5,6 +5,8 @@ let id = [];
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 export default class Data {
+
+        //Retrieve data from API
         api(path, method = 'GET', data = null, requiresAuth = false, credentials = null) {
             const url = path
             const options = {
@@ -28,6 +30,7 @@ export default class Data {
             return axios(url, options);
         }
 
+        //Retrieves user from API
         async getUser(emailAddress, password) {
             const response = await this.api('/users', 'GET', null, true, {emailAddress, password});
             if (response.status === 200) {
@@ -39,6 +42,7 @@ export default class Data {
             }
         }
 
+        //Retrieves specific course from API
         async getCourse(id) {
             const response = await this.api(`/courses/${id}`, 'GET', null);
             if (response.status === 200) {
@@ -50,6 +54,7 @@ export default class Data {
             }
         }
 
+        //Creates new user
         async createUser(user) {
             const response = await this.api('/users', 'POST', user);
             if (response.status === 201) {
@@ -61,6 +66,7 @@ export default class Data {
             }
         }
 
+        //Creates new course
         async createCourse(course, emailAddress, password) {
             const response = await this.api('/courses', 'POST', course, true, {emailAddress, password});
             if (response.status === 201) {
@@ -72,18 +78,20 @@ export default class Data {
             }
         }
 
+        //Updates an existing course
         async updateCourse(id, course, emailAddress, password){
             const response = await this.api(`/courses/${id}`, 'PUT', course, true, {emailAddress, password});
             if (response.status === 204) {
                 return [];
             } else if (response.status === 400) {
-                return response.error.response.data;
+                return response.data.course.errors;
             } else {
                 throw new Error();
             }
         
         }
 
+        //Deletes an existing course
         async deleteCourse(id, emailAddress, password) {
             const response = await this.api(`/courses/${id}`, 'DELETE', null, true, {emailAddress,password});
             if (response.status === 204) {

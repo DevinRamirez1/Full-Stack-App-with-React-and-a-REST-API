@@ -6,6 +6,7 @@ import { Context } from "../Context";
 function UpdateCourse() {
     const context = useContext(Context)
 
+    //Component States
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
@@ -17,6 +18,7 @@ function UpdateCourse() {
 
     const navigate = useNavigate();
 
+    //Gets course info to be updated
     useEffect(() => {
         context.data.getCourse(id)
             .then(response => {
@@ -39,6 +41,7 @@ function UpdateCourse() {
             })
     }, [context, id, navigate]);
 
+    //variable to handle submit
     const submit = () => {
         const course = {
             title,
@@ -48,9 +51,11 @@ function UpdateCourse() {
             userId: context.authenticatedUser.userId
         };
 
+        //variables to handle user authentication
         const emailAddress = context.authenticatedUser.emailAddress;
         const password = context.authenticatedUser.password;
 
+        //Updated data in the server
         context.data.updateCourse(id, course, emailAddress, password)
             .then(() => {
                 console.log('Course has been updated.')
@@ -67,6 +72,7 @@ function UpdateCourse() {
             });
     }
 
+    //Handles cancel button
     const cancel = () => {
         navigate('/');
     }

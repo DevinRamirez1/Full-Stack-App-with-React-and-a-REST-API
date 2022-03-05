@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Context } from '../Context'
 
 function CourseDetail() {
+    //Component States
     const { id } = useParams();
     const [ course, setCourse ] = useState({});
     const [user, setUser] = useState({});
@@ -11,6 +12,7 @@ function CourseDetail() {
 
     const navigate = useNavigate();
 
+    //Retrieves Course data
     useEffect(() => {
         context.data.getCourse(id)
             .then(response => {

@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from './Form'
 
 export default function UserSignIn({ context }) {
+
+        //Component States
         const [emailAddress, setEmailAddress] = useState('');
         const [password, setPassword] = useState('');
         const [errors, setErrors] = useState([]);
 
         const navigate = useNavigate();
 
+        //Handles submit button
         const submit = () => {
             context.actions.signIn(emailAddress, password)
                 .then( user => {
@@ -27,6 +30,7 @@ export default function UserSignIn({ context }) {
                 });
         }
 
+        //Handles cancel button
         const cancel = () => {
             navigate('/');
         }
