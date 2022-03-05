@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const Sequelize = require('sequelize');
 
-const { sequelize } = require('./models').sequelize;
+const { sequelize } = require('./models');
 
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
