@@ -22,12 +22,12 @@ function UpdateCourse() {
     useEffect(() => {
         context.data.getCourse(id)
             .then(response => {
-                if (response.course.userId === context.authenticatedUser.id) {
-                    setTitle(response.course.title)
-                    setDescription(response.course.description)
-                    setEstimatedTime(response.course.estimatedTime)
-                    setMaterialsNeeded(response.course.materialsNeeded)
-                    setAuthor(`${response.course.User.firstName} ${response.course.User.lastName}`)
+                if (response.userId === context.authenticatedUser.id) {
+                    setTitle(response.title)
+                    setDescription(response.description)
+                    setEstimatedTime(response.estimatedTime)
+                    setMaterialsNeeded(response.materialsNeeded)
+                    setAuthor(`${response.User.firstName} ${response.User.lastName}`)
                 } else {
                     navigate('/forbidden');
                 }
