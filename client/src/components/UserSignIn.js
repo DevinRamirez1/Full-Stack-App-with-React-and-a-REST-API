@@ -16,7 +16,7 @@ export default function UserSignIn({ context }) {
             context.actions.signIn(emailAddress, password)
                 .then( user => {
                     console.log(`${emailAddress} is now signed in.`);
-                    navigate('/');
+                    navigate(-1);
                 })
                 .catch ( error => {
                     console.log(error);
