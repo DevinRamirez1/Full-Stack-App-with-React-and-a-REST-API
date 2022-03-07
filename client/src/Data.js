@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-let id = [];
-
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 export default class Data {
