@@ -17,7 +17,7 @@ function Courses({ context }) {
                 console.log(error);
                 navigate('/error')
             })
-    }, []);
+    }, [context.data, navigate]);
 
     return (
         <React.Fragment>
