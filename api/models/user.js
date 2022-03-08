@@ -2,7 +2,6 @@
 
 const { Model, DataTypes } = require("sequelize");
 const bcrypt = require('bcrypt');
-const sequelize = require("sequelize");
 
 //Creates model
 module.exports = (sequelize) => {
@@ -51,10 +50,6 @@ module.exports = (sequelize) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            set(val) {
-                const hashedPassword = bcrypt.hashSync(val, 10);
-                this.setDataValue('password', hashedPassword);
-            },
             validate: {
                 notNull: {
                     msg: 'A password is required.'
@@ -62,10 +57,16 @@ module.exports = (sequelize) => {
                 notEmpty: {
                     msg: 'Please provide a password.'
                 }
-            }
+            },
         },
         
-    }, { sequelize });
+    }, { 
+        hooks: {
+            afterValidate: async (user) => {
+                user.password = await bcrypt.hashSync(user.password, 10)
+            }
+        },
+        sequelize });
 
     //Creates association with course model
     User.associate = (models) => {
